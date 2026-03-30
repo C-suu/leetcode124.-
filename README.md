@@ -1,4 +1,4 @@
-<img width="1141" height="1182" alt="image" src="https://github.com/user-attachments/assets/fc1b1dba-613b-48fc-89e8-95a56ac4df51" /># leetcode124.-
+# leetcode124.-
 
 <img width="1141" height="1182" alt="image" src="https://github.com/user-attachments/assets/c7069d7b-cc0a-4819-964f-793a35e368b6" />
 
