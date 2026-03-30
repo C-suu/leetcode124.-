@@ -34,22 +34,26 @@
 ```python
 class Solution:
     def maxPathSum(self, root: Optional[TreeNode]) -> int:
-        ans = -inf                                        # 初始化全局最大答案，设为负无穷，保证任何路径和都能更新它
+        ans = -inf  # 初始化全局最大答案，设为负无穷，保证任何路径和都能更新它
         
-        def dfs(node: Optional[TreeNode]) -> int:         # 定义深度优先搜索函数，计算并返回以当前节点为顶端的“最大单向链和”
-            if node is None:                              # 边界条件：走到空节点
-                return 0                                  # 空节点没有值，对路径和的贡献为 0
+        def dfs(node: Optional[TreeNode]) -> int: # 定义深度优先搜索函数，计算并返回以当前节点为顶端的“最大单向链和”
+            if node is None:                      # 边界条件：走到空节点
+                return 0                          # 空节点没有值，对路径和的贡献为 0
                 
-            l_val = dfs(node.left)                        # 递归探索左子树，获取左边向下走的最大单向链和（已在内部规避了负数）
-            r_val = dfs(node.right)                       # 递归探索右子树，获取右边向下走的最大单向链和（已在内部规避了负数）
+            l_val = dfs(node.left)    # 递归探索左子树，获取左边向下走的最大单向链和（已在内部规避了负数）
+            r_val = dfs(node.right)   # 递归探索右子树，获取右边向下走的最大单向链和（已在内部规避了负数）
             
-            nonlocal ans                                  # 声明使用外部的全局答案变量 ans
-            ans = max(ans, l_val + r_val + node.val)      # 核心动作：将当前节点作为最高点（转折点），拼接左右链，尝试打破历史最大记录
+            nonlocal ans       # 声明使用外部的全局答案变量 ans
+
+            # 核心动作：将当前节点作为最高点（转折点），拼接左右链，尝试打破历史最大记录
+            ans = max(ans, l_val + r_val + node.val)
+
+            # 向上级汇报：挑左右两边较大的一条链加上自己的值；如果是负收益，直接汇报 0 斩断该分支
+            return max(max(l_val, r_val) + node.val, 0)
+
             
-            return max(max(l_val, r_val) + node.val, 0)   # 向上级汇报：挑左右两边较大的一条链加上自己的值；如果是负收益，直接汇报 0 斩断该分支
-            
-        dfs(root)                                         # 从整棵树的根节点拉开计算序幕
-        return ans                                        # 所有节点都当过最高点并比对完毕后，返回全局最高记录
+        dfs(root)     # 从整棵树的根节点拉开计算序幕
+        return ans    # 所有节点都当过最高点并比对完毕后，返回全局最高记录
 ```
 
 ---
